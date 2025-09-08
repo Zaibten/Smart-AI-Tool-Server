@@ -10,17 +10,18 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 // ✅ Enable CORS for frontend (Vite default is 5173, but check your running port)
+const cors = require("cors");
+
 const corsOptions = {
-  origin: process.env.FRONTEND_URL || "https://smartaitools.vercel.app", // allow your frontend
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],                   // allowed HTTP methods
-  allowedHeaders: ["Content-Type", "Authorization"],                     // headers you expect
-  credentials: true,                                                      // allow cookies/auth
+  origin: "https://smartaitools.vercel.app", // frontend origin
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: true,
 };
 
-// Apply CORS globally
 app.use(cors(corsOptions));
 
-// Handle preflight requests for all routes
+// Handle preflight OPTIONS for all routes
 app.options("*", cors(corsOptions));
 
 
