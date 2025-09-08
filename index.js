@@ -6,12 +6,13 @@ const cors = require("cors");
 
 dotenv.config();
 
-const app = express();
 const PORT = process.env.PORT || 5000;
 
-// ✅ Enable CORS for frontend (Vite default is 5173, but check your running port)
 const cors = require("cors");
 
+const app = express();
+
+// ✅ CORS options
 const corsOptions = {
   origin: "https://smartaitools.vercel.app", // frontend origin
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
@@ -19,11 +20,14 @@ const corsOptions = {
   credentials: true,
 };
 
+// Apply CORS middleware **before routes**
 app.use(cors(corsOptions));
 
-// Handle preflight OPTIONS for all routes
-app.options("*", cors(corsOptions));
+// Parse JSON
+app.use(express.json());
 
+// Handle preflight requests for all routes
+app.options("*", cors(corsOptions));
 
 app.use(express.json());
 
