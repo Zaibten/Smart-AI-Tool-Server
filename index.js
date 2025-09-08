@@ -6,28 +6,17 @@ const cors = require("cors");
 
 dotenv.config();
 
+const app = express();
 const PORT = process.env.PORT || 5000;
 
-const cors = require("cors");
+// Allow requests only from your frontend
+app.use(cors({
+    origin: 'https://smartaitools.vercel.app', // your frontend URL
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+}));
 
-const app = express();
-
-// ✅ CORS options
-const corsOptions = {
-  origin: "https://smartaitools.vercel.app", // frontend origin
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"],
-  credentials: true,
-};
-
-// Apply CORS middleware **before routes**
-app.use(cors(corsOptions));
-
-// Parse JSON
 app.use(express.json());
-
-// Handle preflight requests for all routes
-app.options("*", cors(corsOptions));
 
 app.use(express.json());
 
